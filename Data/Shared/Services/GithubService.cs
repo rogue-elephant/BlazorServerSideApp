@@ -40,20 +40,19 @@ namespace BlazorServerSideApp.Data
         $"https://api.github.com/repos/{request.Username}/{request.RepoName}/issues?state=open";
         private ChannelReader<GithubIssue[]> GetIssues(IEnumerable<GithubIssuesRequest> requests, CancellationToken cancellationToken)
         {
-            var channel = Channel.CreateBounded<GithubIssue[]>(new BoundedChannelOptions(50)
-            {
-                FullMode = BoundedChannelFullMode.Wait
-            });
+            var channel = Channel.CreateUnbounded<GithubIssue[]>();
 
-            foreach (var request in requests)
-                Task.Run(async () =>
-                {
-                    using (var client = new AsyncWebClient())
-                    {
-                        await channel.Writer.WriteAsync(await client.Get<GithubIssue[]>(BuildUrl(request), cancellationToken));
-                        channel.Writer.Complete();
-                    }
-                });
+            Task.Run(async () =>
+                            {
+                                foreach (var request in requests)
+                                    using (var client = new AsyncWebClient())
+                                    {
+                                        await channel.Writer.WriteAsync(await client.Get<GithubIssue[]>(BuildUrl(request), cancellationToken));
+                                    }
+
+                                channel.Writer.Complete();
+                            });
+
 
             return channel.Reader;
         }
