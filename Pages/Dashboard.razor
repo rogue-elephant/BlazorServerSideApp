@@ -1,0 +1,34 @@
+@page "/"
+
+@using BlazorServerSideApp.Data
+@inject GithubService GithubService
+
+<h1>Dashboard</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (repoIssues == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        @foreach (var issue in repoIssues)
+            {
+                <h2>@issue.Repository_Url</h2>
+                <strong>From User: @issue.User.Login <em>(Is Site Admin: @issue.User.Site_Admin)</em></strong>
+                <h3>@issue.Title</h3>
+                <p>@issue.Body</p>
+            }
+    </div>
+}
+
+@code {
+    private IList<GithubIssue> repoIssues;
+
+    protected override async Task OnInitializedAsync()
+    {
+        repoIssues = await GithubService.GetIssues();
+    }
+}
