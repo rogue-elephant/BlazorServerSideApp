@@ -1,5 +1,5 @@
 # Blazor Serverside
 
-![](readme.PNG)
+![](Readme.PNG)
 
 using blazor and channels and shiz
