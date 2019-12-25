@@ -13,14 +13,26 @@
 }
 else
 {
-    <div>
-        @foreach (var issue in repoIssues)
-            {
-                <h2>@issue.Repository_Url</h2>
-                <strong>From User: @issue.User.Login <em>(Is Site Admin: @issue.User.Site_Admin)</em></strong>
-                <h3>@issue.Title</h3>
-                <p>@issue.Body</p>
-            }
+    <div class="container-fluid">  
+        <div class="row">
+        @for (int i = 0; i < repoIssues.Count; i++)
+        {
+            var issue = repoIssues[i];
+            <div class="col-xs-6">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="card-img-top" alt="Github logo">
+                    <div class="card-body">
+                        <label class="btn btn-primary">State: @issue.State</label>
+                        <h5 class="card-title">@issue.Title</h5>
+                        <p>
+                            <strong>From User: @issue.User.Login <em>(Is Site Admin: @issue.User.Site_Admin)</em></strong>
+                        </p>
+                        <p class="card-text">@issue.Body</p>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
     </div>
 }
 

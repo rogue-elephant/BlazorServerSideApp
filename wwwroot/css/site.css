@@ -183,3 +183,12 @@ app {
         display: block;
     }
 }
+
+.row {
+    margin-bottom: 10px;
+}
+.card {
+    background-image: linear-gradient(180deg, rgb(5, 60, 90) 0%, #303030 122%);
+    height: 715px;
+    margin: 5px;
+}
