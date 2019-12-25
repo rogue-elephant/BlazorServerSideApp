@@ -1,5 +1,5 @@
 # Blazor Serverside
 
-![](readme.gif)
+![](readme.png)
 
 using blazor and channels and shiz
